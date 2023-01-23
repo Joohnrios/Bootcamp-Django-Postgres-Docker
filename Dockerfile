@@ -6,7 +6,7 @@ COPY ./requirements.txt /requirements.txt
 
 # Install postgres client
 RUN apk add --update --no-cache postgresql-client
-
+RUN python -m pip install --upgrade pip
 # Install individual dependencies
 # so that we could avoid installing extra packages to the container
 RUN apk add --update --no-cache --virtual .tmp-build-deps \
@@ -17,7 +17,7 @@ RUN pip install -r /requirements.txt
 RUN apk del .tmp-build-deps
 
 WORKDIR /app
-COPY . /app
+COPY . .
 
 # [Security] Limit the scope of user who run the docker image
 RUN adduser -D user
